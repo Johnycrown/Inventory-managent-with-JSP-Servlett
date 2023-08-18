@@ -1,4 +1,6 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,8 +8,14 @@
     <title>Create User</title>
 </head>
 <body>
+
+
+
+
     <h1>Create User</h1>
+
     <form action="UserServlet" method="post">
+
         <label for="email">Email:</label>
         <input type="email" name="email" required><br>
 
@@ -22,6 +30,11 @@
 
         <label for="active">Active:</label>
         <input type="checkbox" name="active" value="true"><br>
+        <select name="role">
+        <br>
+       <option value=1>System Admin</option>
+       <option value=2>regular user</option>
+       </br>
 
         <!-- Additional fields and labels can be added here -->
 

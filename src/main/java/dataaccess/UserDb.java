@@ -1,19 +1,23 @@
 package dataaccess;
 
+import models.Role;
 import models.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import java.util.List;
 
 public class UserDb {
 
 
-    public void saveUser(User user ){
+    public void saveUser(User user){
         EntityManager entityManager = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
 
         try {
             transaction.begin();
+
+
             entityManager.persist(user);
             transaction.commit();
 
@@ -63,6 +67,26 @@ public class UserDb {
 
 
     }
+    public  List<User> findAllUser(){
+
+        EntityManager entityManager = DBUtil.getEmFactory().createEntityManager();
+
+
+        try{
+            List<User> user =    entityManager.createNamedQuery("User.findAll", User.class).getResultList();
+            return user;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+        finally {
+            entityManager.close();
+        }
+
+
+    }
+
 
     public void deleteUser(User user){
         EntityManager entityManager = DBUtil.getEmFactory().createEntityManager();

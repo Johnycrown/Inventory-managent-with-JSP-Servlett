@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--<Context path="/mavenproject3"/>-->
-<Context path="/">
+<Context path="/mavenproject3/">
     <Resource name="jdbc/inventorydb" auth="Container"
               driverClassName="com.mysql.jdbc.Driver"
               url="jdbc:mysql://localhost:3306/inventorydb"

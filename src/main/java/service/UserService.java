@@ -2,6 +2,7 @@ package service;
 
 import dataaccess.CategoryDb;
 import dataaccess.ItemsDb;
+import dataaccess.RoleDb;
 import dataaccess.UserDb;
 import models.Category;
 import models.Item;
@@ -11,21 +12,24 @@ import java.util.List;
 
 public class UserService {
     UserDb userDb = new UserDb();
-    public void registerUser(String email, boolean active, String firstName, String lastName, String password){
+    public void registerUser(String email, boolean active, String firstName, String lastName, String password, int roleId){
+        RoleDb roleDb = new RoleDb();
+        roleDb.findRole(roleId);
 
 
         User user = new User(email,active,firstName,lastName,password);
+        user.setRole(  roleDb.findRole(roleId));
         userDb.saveUser(user);
 
 
     }
 
-    public void updateUser(String email, boolean active, String firstName, String lastName, String password){
-        User savedUser = userDb.findUser(email);
-        savedUser.setFirstName(firstName);
-        savedUser.setLastName(lastName);
-        savedUser.setPassword(password);
-        userDb.updateUser(savedUser);
+    public void updateUser(User user){
+//        User savedUser = userDb.findUser(email);
+//        savedUser.setFirstName(firstName);
+//        savedUser.setLastName(lastName);
+//        savedUser.setPassword(password);
+        userDb.updateUser(user);
     }
 
     public List<Item>   getAllItems(String email){
@@ -61,6 +65,19 @@ public class UserService {
 
 
     }
+    public User login(String email, String password) {
+        UserDb userDB = new UserDb();
+
+        try {
+            User user = userDB.findUser(email);
+            if (password.equals(user.getPassword()) && user.getActive()) {
+                return user;
+            }
+        } catch (Exception e) {
+        }
+
+        return null;
+    }
 
     public void activateAccount(String email){
         User user = userDb.findUser(email);
@@ -72,5 +89,24 @@ public class UserService {
         User user = userDb.findUser(email);
         user.setActive(false);
         userDb.updateUser(user);
+    }
+    public List<User> findAllUser(){
+        List<User> users = userDb.findAllUser();
+        return users;
+    }
+    public User findUserByEmail(String email){
+        User user =  userDb.findUser(email);
+        return user;
+    }
+    public void deleteUser(String email){
+        User user =  userDb.findUser(email);
+        ItemsDb itemsDb = new ItemsDb();
+        List<Item> items = user.getItemList();
+        for(Item item: items){
+            itemsDb.deleteItem(item);
+        }
+
+        userDb.deleteUser(user);
+
     }
 }

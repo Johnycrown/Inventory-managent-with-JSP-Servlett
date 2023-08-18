@@ -30,4 +30,11 @@ public class CategoryService {
         return  category.getItemList();
 
     }
+    public Category getCategoryById(int categoryId) {
+        Category category = categoryDb.findCategoryById(categoryId);
+        return category;
+    }
+    public void updateCategory(Category category){
+        categoryDb.updateCategory(category);
+    }
 }

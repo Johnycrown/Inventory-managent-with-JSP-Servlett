@@ -50,7 +50,8 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "password")
     private String password;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = Item.class, mappedBy = "owner")
+  //  @OneToMany(cascade =CascadeType.ALL)
     private List<Item> itemList;
     @JoinColumn(name = "role", referencedColumnName = "role_id")
     @ManyToOne(optional = false)

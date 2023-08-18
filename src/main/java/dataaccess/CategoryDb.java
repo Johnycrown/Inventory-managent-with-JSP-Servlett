@@ -8,8 +8,6 @@ import javax.persistence.EntityTransaction;
 import java.util.List;
 
 public class CategoryDb {
-
-
     public void saveCategory(Category category ){
         EntityManager entityManager = DBUtil.getEmFactory().createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
